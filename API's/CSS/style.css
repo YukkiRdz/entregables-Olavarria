@@ -8,18 +8,19 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 30px;
-    column-gap: 30px;
-    width: 80%;
-    margin: auto;
-    margin-top: 20vh;
+    width: 50%;
+    margin: 35vh;
+    margin-top: 15vh;
     justify-items: center;
 }
 
 .pokemon-card {
     border-radius: 10px;
     width: 40vh;
+    height: 200px;
     background-color: bisque;
     box-shadow: 0 3px 15px rgba(100, 100, 100, 0.5);
+    align-content: center;
 }
 
 .pokemon-card p {
