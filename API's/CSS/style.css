@@ -4,19 +4,22 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.container {
+#container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    width: 90%;
-    margin-left: 30px;
+    gap: 30px;
+    column-gap: 30px;
+    width: 80%;
+    margin: auto;
+    margin-top: 20vh;
+    justify-items: center;
 }
 
 .pokemon-card {
     border-radius: 10px;
-    width: 10%;
+    width: 40vh;
     background-color: bisque;
     box-shadow: 0 3px 15px rgba(100, 100, 100, 0.5);
-   
 }
 
 .pokemon-card p {
