@@ -14,11 +14,11 @@ console.log("Vehiculos registrados en 'RAO': ");
 console.log(registroAutomor.getAuto(), registroAutomor.getMoto(), registroAutomor.getCamion());
 
 //modificar un vehiculo
-registroAutomor.modVehicle('auto', 'ABC123', 'MNO123' ,'Fiat', 'Nafta', 'Thiago', 2005);
+registroAutomor.modVehicle('auto', 'ABC123', 'Nafta' ,'Fiat', 'MNO123', 'Thiago', 2005);
 console.log("Vehiculos luego de la modificacion en 'RAO': ");
 console.log(registroAutomor.getAuto(), registroAutomor.getMoto(), registroAutomor.getCamion());
 
 //Dar de baja el vehiculo
-registroAutomor.removeVehicle('camion', 'JKL123'); //debo modificar las propiedades del objeto en el metodo modVehicle y no crear un nuevo array para que removeVehicle los encuentre
+registroAutomor.removeVehicle('auto', 'MNO123'); //debo modificar las propiedades del objeto en el metodo modVehicle y no crear un nuevo array para que removeVehicle los encuentre
 console.log('Vehiculos luego de eliminar uno');
 console.log(registroAutomor.getAuto(), registroAutomor.getMoto(), registroAutomor.getCamion());

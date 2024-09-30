@@ -73,47 +73,86 @@ export class RegistroAutomor {
     }
 
     //modificar un vehiculo
-    //Se le pasa el tipo y la patente del vehiculo a modificar como parametros para poder buscarlo dentro de los arrays, ademas se le pasan las nuevas propiedades 
+    //sin crear un nuevo vehiculo
     modVehicle(vehiculo: 'auto' | 'moto' | 'camion', patente: string, modMarca: string, modMotor: string, modPatente: string, modTitular: string, modModelo: number): void {
-        //Buscar la patente segun en que tipo de vehiculo se desea modificar
+        //buscar la patente segun el tipo de vehiculo
         if (vehiculo === 'auto') {
-                    //Buscar el vehículo en el array de autos
-                    const indexAuto = this.autos.findIndex(auto => auto.getPatente() === patente);
-                    //Si la patente fue encontrada, es decir no devuelve -1
-                    if (indexAuto !== -1) {
-                        // Modificar el auto registrado
-                        this.autos[indexAuto] = new Auto(modMarca, modMotor, modPatente, modTitular, modModelo);
-                    } else {
-                        //Si la patente no fue encontrada, devuelve -1
-                        console.log('Auto no encontrado.');
-                    }
-                } else if (vehiculo === 'moto') {
-                    //Buscar el vehículo en el array de motos
-                    const indexMoto = this.motos.findIndex(moto => moto.getPatente() === patente);
-                    //Si la patente fue encontrada, es decir no devuelve -1
-                    if (indexMoto !== -1) {
-                        // Modificar la moto registrada
-                        this.motos[indexMoto] = new Moto(modMarca, modMotor, modPatente, modTitular, modModelo);
-                    } else {
-                        //Si la patente no fue encontrada, devuelve -1
-                        console.log('Moto no encontrada.');
-                    }
-                } else if (vehiculo === 'camion') {
-                    //Buscar el vehículo en el array de camiones
-                    const indexCamion = this.camiones.findIndex(camion => camion.getPatente() === patente);
-                    //Si la patente fue encontrada, es decir no devuelve -1
-                    if (indexCamion !== -1) {
-                        // Modificar el camión registrado
-                        this.camiones[indexCamion] = new Camion(modMarca, modMotor, modPatente, modTitular, modModelo);
-                    } else {
-                        //Si la patente no fue encontrada, devuelve -1
-                        console.log('Camión no encontrado.');
-                    }
-                } else {
-                    //Si el tipo del vehiculo es incorrecto
-                    console.log('El tipo de vehiculo es invalido. Debe ser "auto", "moto" o "camion".');
-                }
+            const autoEncontrado= this.autos.find(auto => auto.getPatente() === patente);
+            if (autoEncontrado) {
+                autoEncontrado.setMarca(modMarca);
+                autoEncontrado.setMotor(modMotor);
+                autoEncontrado.setPatente(modPatente);
+                autoEncontrado.setTitular(modTitular);
+                autoEncontrado.setModelo(modModelo);
+            } else {
+                console.log('El auto no ha sido encontrado');
             }
+        } else if (vehiculo === 'moto') {
+            const motoEncontrada= this.motos.find(moto => moto.getPatente() === patente);
+            if (motoEncontrada) {
+                motoEncontrada.setMarca(modMarca);
+                motoEncontrada.setMotor(modMotor);
+                motoEncontrada.setPatente(modPatente);
+                motoEncontrada.setTitular(modTitular);
+                motoEncontrada.setModelo(modModelo);
+            } else {
+                console.log('La moto no ha sido encontrado');
+            } 
+        }if (vehiculo === 'camion') {
+            const camionEncontrado= this.camiones.find(camion => camion.getPatente() === patente);
+            if (camionEncontrado) {
+                camionEncontrado.setMarca(modMarca);
+                camionEncontrado.setMotor(modMotor);
+                camionEncontrado.setPatente(modPatente);
+                camionEncontrado.setTitular(modTitular);
+                camionEncontrado.setModelo(modModelo);
+            } else {
+                console.log('El camion no ha sido encontrado');
+            }
+        }
+    }
+
+    // //Se le pasa el tipo y la patente del vehiculo a modificar como parametros para poder buscarlo dentro de los arrays, ademas se le pasan las nuevas propiedades 
+    // modVehicle(vehiculo: 'auto' | 'moto' | 'camion', patente: string, modMarca: string, modMotor: string, modPatente: string, modTitular: string, modModelo: number): void {
+    //     //Buscar la patente segun en que tipo de vehiculo se desea modificar
+    //     if (vehiculo === 'auto') {
+    //                 //Buscar el vehículo en el array de autos
+    //                 const indexAuto = this.autos.findIndex(auto => auto.getPatente() === patente);
+    //                 //Si la patente fue encontrada, es decir no devuelve -1
+    //                 if (indexAuto !== -1) {
+    //                     // Modificar el auto registrado
+    //                     this.autos[indexAuto] = new Auto(modMarca, modMotor, modPatente, modTitular, modModelo);
+    //                 } else {
+    //                     //Si la patente no fue encontrada, devuelve -1
+    //                     console.log('Auto no encontrado.');
+    //                 }
+    //             } else if (vehiculo === 'moto') {
+    //                 //Buscar el vehículo en el array de motos
+    //                 const indexMoto = this.motos.findIndex(moto => moto.getPatente() === patente);
+    //                 //Si la patente fue encontrada, es decir no devuelve -1
+    //                 if (indexMoto !== -1) {
+    //                     // Modificar la moto registrada
+    //                     this.motos[indexMoto] = new Moto(modMarca, modMotor, modPatente, modTitular, modModelo);
+    //                 } else {
+    //                     //Si la patente no fue encontrada, devuelve -1
+    //                     console.log('Moto no encontrada.');
+    //                 }
+    //             } else if (vehiculo === 'camion') {
+    //                 //Buscar el vehículo en el array de camiones
+    //                 const indexCamion = this.camiones.findIndex(camion => camion.getPatente() === patente);
+    //                 //Si la patente fue encontrada, es decir no devuelve -1
+    //                 if (indexCamion !== -1) {
+    //                     // Modificar el camión registrado
+    //                     this.camiones[indexCamion] = new Camion(modMarca, modMotor, modPatente, modTitular, modModelo);
+    //                 } else {
+    //                     //Si la patente no fue encontrada, devuelve -1
+    //                     console.log('Camión no encontrado.');
+    //                 }
+    //             } else {
+    //                 //Si el tipo del vehiculo es incorrecto
+    //                 console.log('El tipo de vehiculo es invalido. Debe ser "auto", "moto" o "camion".');
+    //             }
+    //         }
 
     //dar de baja un vehiculo por su patente
     removeVehicle(vehiculo: 'auto' | 'moto' | 'camion', patente: string): void{
@@ -121,7 +160,6 @@ export class RegistroAutomor {
         let vehiculoEncontrado = false;
         if(vehiculo === 'auto'){
             const indexAutoAEliminar = this.autos.findIndex(auto => auto.getPatente() === patente);
-            console.log(indexAutoAEliminar);
             if (indexAutoAEliminar !== -1) {
                 this.autos.splice(indexAutoAEliminar, 1); //desde el indice indexAutoAEliminar elimina 1 elemento
                 vehiculoEncontrado = true;
