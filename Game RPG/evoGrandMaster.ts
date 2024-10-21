@@ -1,5 +1,5 @@
 import { Character } from "./Character";
-import { Mage } from "./Mage"; 
+import { Mage } from "./Mage";
 
 export class GrandMaster extends Mage{
     private evoSkills: {skillName: string, skillDamage: number}[]; //cada skill tiene un damage especifico
