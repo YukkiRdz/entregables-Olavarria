@@ -1,11 +1,11 @@
 import { Character } from "./Character";
 
 export class Healer extends Character {
-    private healerSkills: {skillName: string, skillDamage: number}[]; //cada skill tiene un damage especifico
+    private healerSkills: {skillName: string, skillHealing: number}[]; //cada skill tiene un damage especifico
 
-    constructor(name: string, level: number, HP: number = 150, weapons: string[] = ["wand"], skills: {skillName: string, skillDamage: number}[]) {
-        super(name, level, HP, weapons, 5);
-        this.healerSkills = skills;
+    constructor(name: string, level: number, weapons: string[] = ["wand"], healerSkills: {skillName: string, skillHealing: number}[] = [{skillName: 'divinelight', skillHealing: 15}, {skillName: 'benevolence', skillHealing: 25}]) {
+        super(name, level, 150, weapons, 5);
+        this.healerSkills = healerSkills;
     }
 
     public getSkills(): string[] {
@@ -18,16 +18,18 @@ export class Healer extends Character {
     }
 
     //Agregar skills
-    public AddSkills(skill: string, damage: number) {
-        this.healerSkills.push({skillName: skill, skillDamage: damage}); //cada skill y su respectivo damage se almacenan en el array de habilidades
+    public AddSkills(skill: string, heal: number) {
+        this.healerSkills.push({skillName: skill, skillHealing: heal}); //cada skill y su respectivo damage se almacenan en el array de habilidades
     }
 
     //metodo de ataque por defecto
-    public Attack(target: Character): void {
-        const skill =this.healerSkills[0]; //por defecto ataca con la primera skill
-        console.log(`${this.name} lanza ${skill.skillName} con ${this.weapon[0]} y ha causado ${skill.skillDamage} de daño.`);
-        target.TakeDamage(skill.skillDamage);
-        if(skill.skillDamage > target.getHP()) {
+    public Attack(target: Character,  weapon: string[]): void {
+        const basicAttack = this.damage; //por defecto ataca con su ataque basico
+        console.log(`${this.name} ataca con ${weapon}.`);
+        if (!target.Defense(basicAttack)) {  //Si el target no puede defenderse le hace daño
+            target.TakeDamage(basicAttack);
+        }
+        if(basicAttack > target.getHP()) {
             console.log(`${this.name} ha eliminado a ${target} y sube de nivel.`);
             this.level = this.level + 1;
             console.log(`Su nivel actual es ${this.level}.`);
@@ -39,12 +41,15 @@ export class Healer extends Character {
         const skill = this.healerSkills.find(skill => skill.skillName === skillName); //buscamos la skill dentro del array
         //si la skill ingresada existe en el array
         if (skill) {
-            console.log(`${this.name} ha utilizado ${skill.skillName} en ${target.getName()} y ha causado ${skill.skillDamage} de daño.`);
-            target.TakeDamage(skill.skillDamage);
-            if(skill.skillDamage > target.getHP()) {
-                console.log(`${this.name} ha eliminado a ${target} y sube de nivel.`);
-                this.level = this.level + 1;
-                console.log(`Su nivel actual es ${this.level}.`);
+            console.log(`${this.name} ha utilizado ${skill.skillName} en ${target.getName()}.`);
+            if (!target.Defense(skill.skillHealing)) {  //Si el target no puede defenderse le hace daño
+                target.TakeDamage(skill.skillHealing);
+            }
+            if(target.getHP() === 0) {
+                console.log(`${this.name} fue eliminado, no puedes revivirlo con esta habilidad.`);
+            } else if (skillName === 'divine light' && target.getHP() === 0){
+                this.HP = 15;
+                console.log(`${this.name} ha sido revivido. Su HP actual es de ${target.getHP()}`);
             }
         } else {
             console.log(`${this.name} no tiene la habilidad ${skillName}.`);
@@ -60,7 +65,14 @@ export class Healer extends Character {
         console.log(`${this.name} ha sanado a ${target.getName()} con ${heal} HP! su HP actual es: ${target.getHP()}`);
     }
 
-    public Defend(): void {
-        
+    //la defensa del healer es de 5
+    public Defense(damage: number): boolean {
+        if(damage <= 5) {
+            console.log(`${this.name} se ha defendido con exito.`);
+            return true; //si el damage es menor o igual a 20 la defensa es exitosa
+        } else {
+            console.log(`${this.name} no ha podido defenderse del ataque. Ha recibido ${damage} de daño.`);
+            return false; //si el damage es mayor a 20 la defensa a fallado
+        }
     }
 }

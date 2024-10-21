@@ -50,9 +50,15 @@ export abstract class Character {
     //metodo polimorfico para agregar armas al personaje
     abstract AddWeapon(weapon: string): void;
 
-    //metodo polimorfico de damage recibido
-    abstract TakeDamage(damage: number): void;
-
+    //damage recibido, si el hp llega a 0 es derrotado
+    public TakeDamage(damage: number) {
+    this.HP = Math.max(this.HP - damage, 0); //se asegura de que el HP no baje de 0
+    console.log(`${this.name} tiene un HP actual de ${this.HP}`);
+    if(this.HP === 0){
+        console.log(`${this.name} ha sido derrotado`);
+        }
+    }
+    
     //metodo polimorfico de ataque
     abstract Attack(target: Character, weapon: string[]): void;
 

@@ -1,21 +1,23 @@
-import { GrandMaster } from "./evoGrandMaster";
 import { Character } from "./Character";
+import { Mage } from "./Mage"; 
 
-export class Mage extends Character{
-    private mageSkills: {skillName: string, skillDamage: number}[]; //cada skill tiene un damage especifico
+export class GrandMaster extends Mage{
+    private evoSkills: {skillName: string, skillDamage: number}[]; //cada skill tiene un damage especifico
 
-    constructor(name: string, level: number, weapon: string[] = ['staff'], damage:number, mageSkills: {skillName: string, skillDamage: number}[] = [{skillName: 'fireball', skillDamage: 50}]) {
-    super(name, level, 200, weapon, 15); //el damage varia segun la class
-    this.mageSkills = mageSkills;
+    constructor(name: string, level: number, weapon: string[] = ['staff'], evoSkills: {skillName: string, skillDamage: number}[] = [{skillName: 'meteor', skillDamage: 50}]) {
+        super(name, level, weapon, 20);
+        this.level >= 10;
+        this.HP = 250;
+        this.evoSkills = evoSkills;
     }
 
     public getSkillDamage(skillName: string): number {
-        const skill = this.mageSkills.find(skill => skill.skillName === skillName);
+        const skill = this.evoSkills.find(skill => skill.skillName === skillName);
         return skill ? skill.skillDamage : 0;
     }
 
     public getSkills(): string[] {
-        return Object.keys(this.mageSkills); //devuelve un array de propiedades enumerables del objeto dado
+        return Object.keys(this.evoSkills); //devuelve un array de propiedades enumerables del objeto dado
     }
 
     //metodo para agregar armas al personaje
@@ -25,7 +27,7 @@ export class Mage extends Character{
 
     //Agregar skills
     public AddSkills(skill: string, damage: number) {
-        this.mageSkills.push({skillName: skill, skillDamage: damage}); //cada skill y su respectivo damage se almacenan en el array de habilidades
+        this.evoSkills.push({skillName: skill, skillDamage: damage}); //cada skill y su respectivo damage se almacenan en el array de habilidades
     }
 
     //metodo de ataque por defecto
@@ -44,7 +46,7 @@ export class Mage extends Character{
 
     //Usar una skill en especifico
     public UseSkill(skillName: string, target: Character) {
-        const skill = this.mageSkills.find(skill => skill.skillName === skillName); //buscamos la skill dentro del array
+        const skill = this.evoSkills.find(skill => skill.skillName === skillName); //buscamos la skill dentro del array
         //si la skill ingresada existe en el array
         if (skill) {
             console.log(`${this.name} ha utilizado ${skill.skillName} en ${target.getName()}.`);
@@ -61,26 +63,14 @@ export class Mage extends Character{
         }
     }
 
-    //la defensa del mago es de 10
+    //la defensa del grandMaster es de 25
     public Defense(damage: number): boolean {
-        if(damage <= 10) {
+        if(damage <= 25) {
             console.log(`${this.name} se ha defendido con exito.`);
             return true; //si el damage es menor o igual a 20 la defensa es exitosa
         } else {
             console.log(`${this.name} no ha podido defenderse del ataque. Ha recibido ${damage} de daño.`);
             return false; //si el damage es mayor a 20 la defensa a fallado
-        }
-    }
-
-        //metodo de evolucion a GrandMaster
-        public Evolucion(): GrandMaster | null {
-        //si el mago es level 10 puede evolucionar
-        if (this.level >= 10) {
-            console.log(`${this.name} ha evolucionado a GrandMaster.`);
-            return new GrandMaster(this.name, this.level, this.weapon);  // Crea una nueva instancia de GrandMaster
-        } else {
-            console.log(`${this.name} aún no tiene el nivel necesario para evolucionar.`);
-            return null; // si no es level 10 o mayor, no puede evolucionar
         }
     }
 }
